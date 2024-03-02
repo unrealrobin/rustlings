@@ -39,6 +39,35 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be the number of goals conceded by team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+
+        let mut team_1 = Team{
+            goals_scored : team_1_score,
+            goals_conceded : team_2_score,
+        };
+       
+
+        let mut team_2 = Team{
+            goals_scored : team_2_score,
+            goals_conceded : team_1_score,
+        };
+
+
+
+        scores.entry(team_1_name) //if team 1 exists
+        .and_modify(|team_results| { //reference to team 1 data
+            team_results.goals_scored += team_1_score; // add new score to score
+            team_results.goals_conceded += team_2_score; // add new goals conceded to exisiting goals concded
+            })
+        .or_insert(team_1);//if it doest exist, add new Team struct to value
+
+        scores.entry(team_2_name)
+        .and_modify(|team_results| { 
+            team_results.goals_scored += team_2_score; 
+            team_results.goals_conceded += team_1_score; 
+            })
+        .or_insert(team_2);
+        
+        
     }
     scores
 }
