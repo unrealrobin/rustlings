@@ -12,6 +12,9 @@
 
 pub trait Licensed {
     fn licensing_info(&self) -> String;
+    fn version_number<T>(vnum: T) {
+        vnum
+    }
 }
 
 struct SomeSoftware {
